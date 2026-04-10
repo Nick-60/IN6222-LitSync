@@ -15,7 +15,7 @@ It provides paper browsing, search, bookmarking with metadata, daily recommendat
 ## How to Run
 1. Clone the repo:
    ```bash
-   git clone <your_repo_url>
+   git clone https://github.com/Nick-60/IN6222-LitSync.git
    ```
 2. Open the project in Android Studio.
 3. Let Gradle sync dependencies.
