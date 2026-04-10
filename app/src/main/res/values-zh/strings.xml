@@ -222,4 +222,18 @@
     <string name="text_pagination_summary">第 %1$d / %2$d 页</string>
     <string name="action_back">返回</string>
     <string name="message_back_again_exit">再按一次返回键退出应用</string>
+    <string name="message_refresh_failed_rate_limit">刷新失败（API 限流或网络错误），请稍后再试。</string>
+    <string name="message_refresh_failed_with_error">刷新失败：%1$s</string>
+    <string name="message_refresh_failed_general">刷新失败，请稍后再试。</string>
+    <string name="ai_fallback_summary_no_abstract">核心内容\n这篇论文围绕“%1$s”展开。\n\n为什么重要\n它讨论了一个值得继续阅读的研究问题。\n\n阅读提示\n建议重点关注方法、数据集和实验结果。</string>
+    <string name="ai_fallback_summary_with_abstract">核心内容\n%1$s\n\n为什么重要\n%2$s\n\n阅读提示\n建议重点关注所用方法、数据来源以及实验表现。</string>
+    <string name="symbol_close">✕</string>
+
+    <string-array name="default_bookmark_groups">
+        <item>待读</item>
+        <item>阅读中</item>
+        <item>重要</item>
+        <item>综述</item>
+        <item>实验</item>
+    </string-array>
 </resources>

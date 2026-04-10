@@ -69,12 +69,12 @@ public class RecommendationsFragment extends Fragment {
                                 String errorMessage = workInfo.getOutputData().getString(RecommendationWorker.KEY_ERROR_MESSAGE);
                                 if (errorMessage != null && !errorMessage.isEmpty()) {
                                     if (errorMessage.contains("429") || errorMessage.toLowerCase().contains("rate") || errorMessage.toLowerCase().contains("limit")) {
-                                        Snackbar.make(binding.getRoot(), "Refresh failed (API Rate Limit / Network Error). Please try again later.", Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(binding.getRoot(), getString(R.string.message_refresh_failed_rate_limit), Snackbar.LENGTH_LONG).show();
                                     } else {
-                                        Snackbar.make(binding.getRoot(), "Refresh failed: " + errorMessage, Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(binding.getRoot(), getString(R.string.message_refresh_failed_with_error, errorMessage), Snackbar.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Snackbar.make(binding.getRoot(), "Refresh failed. Please try again later.", Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(binding.getRoot(), getString(R.string.message_refresh_failed_general), Snackbar.LENGTH_LONG).show();
                                 }
                             }
                             loadRecommendations();

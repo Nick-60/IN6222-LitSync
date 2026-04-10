@@ -2,6 +2,7 @@ package com.in6222.litsync.ai;
 
 import android.content.Context;
 
+import com.in6222.litsync.R;
 import com.in6222.litsync.model.PaperItem;
 
 import java.io.IOException;
@@ -14,8 +15,10 @@ public class AiAssistant {
     private final AiConfig config;
     private final AiProvider provider;
     private final AiResponseCache cache;
+    private final Context context;
 
-    public AiAssistant(AiConfig config, AiProvider provider, AiResponseCache cache) {
+    public AiAssistant(Context context, AiConfig config, AiProvider provider, AiResponseCache cache) {
+        this.context = context != null ? context.getApplicationContext() : null;
         this.config = config;
         this.provider = provider;
         this.cache = cache;
@@ -23,7 +26,7 @@ public class AiAssistant {
 
     public static AiAssistant create(Context context) {
         AiConfig config = new AiSettingsStore(context).load();
-        return new AiAssistant(config, createProvider(config), AiResponseCache.getInstance());
+        return new AiAssistant(context, config, createProvider(config), AiResponseCache.getInstance());
     }
 
     public boolean isAvailable() {
@@ -326,23 +329,13 @@ public class AiAssistant {
     private String buildFallbackPaperSummary(PaperItem item) {
         String abstractText = safeText(item.getSummary());
         String title = safeText(item.getTitle());
-        boolean chinese = Locale.getDefault().getLanguage().equalsIgnoreCase("zh");
         if ("N/A".equals(abstractText)) {
-            return chinese
-                    ? "核心内容\n这篇论文围绕“" + title + "”展开。\n\n为什么重要\n它讨论了一个值得继续阅读的研究问题。\n\n阅读提示\n建议重点关注方法、数据集和实验结果。"
-                    : "Idea\nThis paper focuses on \"" + title + "\".\n\nWhy it matters\nIt addresses a research problem worth exploring further.\n\nWhat to notice\nPay attention to the method, dataset, and reported results.";
+            return context != null ? context.getString(R.string.ai_fallback_summary_no_abstract, title) : "";
         }
         String[] parts = abstractText.split("(?<=[.!?。！？])\\s+");
         String firstSentence = parts.length > 0 ? parts[0].trim() : abstractText;
         String secondSentence = parts.length > 1 ? parts[1].trim() : firstSentence;
-        if (chinese) {
-            return "核心内容\n" + firstSentence
-                    + "\n\n为什么重要\n" + secondSentence
-                    + "\n\n阅读提示\n建议重点关注所用方法、数据来源以及实验表现。";
-        }
-        return "Idea\n" + firstSentence
-                + "\n\nWhy it matters\n" + secondSentence
-                + "\n\nWhat to notice\nPay attention to the method, dataset, and reported results.";
+        return context != null ? context.getString(R.string.ai_fallback_summary_with_abstract, firstSentence, secondSentence) : "";
     }
 
     private String buildCacheKey(String prefix, String... parts) {

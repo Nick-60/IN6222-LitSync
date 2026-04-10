@@ -65,9 +65,7 @@ public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHol
             "under", "into", "onto", "your", "ours", "the", "for", "are", "was", "were",
             "will", "can", "may", "our", "its", "via", "new", "study", "method", "methods"
     ));
-    private static final List<String> DEFAULT_BOOKMARK_GROUPS = Arrays.asList(
-            "To Read", "Reading", "Important", "Survey", "Experiment"
-    );
+
 
     private final List<PaperItem> items = new ArrayList<>();
     private final PaperRepository repository;
@@ -390,7 +388,7 @@ public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHol
             titleColumn.addView(subtitleView);
 
             TextView closeView = new TextView(context);
-            closeView.setText("✕");
+            closeView.setText(R.string.symbol_close);
             closeView.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleMedium);
             closeView.setContentDescription(context.getString(R.string.action_close));
             int closePadding = dp(context, 8);
@@ -969,7 +967,8 @@ public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.PaperViewHol
             if (storedGroups != null) {
                 suggestions.addAll(storedGroups);
             }
-            suggestions.addAll(DEFAULT_BOOKMARK_GROUPS);
+            Context context = binding.getRoot().getContext();
+            suggestions.addAll(Arrays.asList(context.getResources().getStringArray(R.array.default_bookmark_groups)));
             return normalizeSuggestions(suggestions);
         }
 

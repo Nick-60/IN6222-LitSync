@@ -228,4 +228,18 @@
     <string name="text_pagination_summary">Page %1$d / %2$d</string>
     <string name="action_back">Back</string>
     <string name="message_back_again_exit">Press back again to exit</string>
+    <string name="message_refresh_failed_rate_limit">Refresh failed (API Rate Limit / Network Error). Please try again later.</string>
+    <string name="message_refresh_failed_with_error">Refresh failed: %1$s</string>
+    <string name="message_refresh_failed_general">Refresh failed. Please try again later.</string>
+    <string name="ai_fallback_summary_no_abstract">Idea\nThis paper focuses on \"%1$s\".\n\nWhy it matters\nIt addresses a research problem worth exploring further.\n\nWhat to notice\nPay attention to the method, dataset, and reported results.</string>
+    <string name="ai_fallback_summary_with_abstract">Idea\n%1$s\n\nWhy it matters\n%2$s\n\nWhat to notice\nPay attention to the method, dataset, and reported results.</string>
+    <string name="symbol_close">✕</string>
+
+    <string-array name="default_bookmark_groups">
+        <item>To Read</item>
+        <item>Reading</item>
+        <item>Important</item>
+        <item>Survey</item>
+        <item>Experiment</item>
+    </string-array>
 </resources>
