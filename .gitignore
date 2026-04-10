@@ -1,0 +1,36 @@
+*.iml
+.gradle
+.gradle-local/
+.android-local/
+/local.properties
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Build outputs
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Signing keys
+*.jks
+*.keystore
+*.p12
+*.key
+
+# Troubleshooting/Profiling
+*.hprof
+*.log
+build_*.txt
+git_status*.txt
+status.json
+google-services.json
