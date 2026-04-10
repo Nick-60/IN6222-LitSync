@@ -33,4 +33,3 @@ local.properties
 build_*.txt
 git_status*.txt
 status.json
-google-services.json

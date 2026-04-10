@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "743181757354",
+    "project_id": "litsync-6d817",
+    "storage_bucket": "litsync-6d817.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743181757354:android:990ecf3959c50c890059d3",
+        "android_client_info": {
+          "package_name": "com.in6222.litsync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Cps2kjL6s5rB_GEsMMLXA_X0mrO7OQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
