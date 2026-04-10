@@ -62,7 +62,17 @@ public class RecommendationEngine {
         }
 
         Map<String, Candidate> candidates = new LinkedHashMap<>();
+        boolean isFirstRequest = true;
         for (String interest : profile.topInterests) {
+            if (!isFirstRequest) {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            isFirstRequest = false;
+
             for (PaperItem paperItem : fetchCandidates(interest)) {
                 String key = dedupeKey(paperItem);
                 if (candidates.containsKey(key)) {

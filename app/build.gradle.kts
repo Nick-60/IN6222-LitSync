@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.recyclerview)
     implementation(libs.cardview)
+    implementation(libs.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

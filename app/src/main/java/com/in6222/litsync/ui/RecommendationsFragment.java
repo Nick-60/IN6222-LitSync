@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Room;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import com.in6222.litsync.R;
 import com.in6222.litsync.ai.AiAssistant;
@@ -17,7 +21,9 @@ import com.in6222.litsync.database.AppDatabase;
 import com.in6222.litsync.databinding.FragmentRecommendationsBinding;
 import com.in6222.litsync.model.PaperItem;
 import com.in6222.litsync.network.RetrofitClient;
+import com.in6222.litsync.recommendation.RecommendationScheduler;
 import com.in6222.litsync.recommendation.RecommendationStore;
+import com.in6222.litsync.recommendation.RecommendationWorker;
 import com.in6222.litsync.recommendation.RecommendedPaper;
 import com.in6222.litsync.repository.PaperRepository;
 
@@ -28,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -51,6 +58,30 @@ public class RecommendationsFragment extends Fragment {
         adapter = new PaperAdapter(repository, executor, true, aiAssistant);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerView.setAdapter(adapter);
+
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            UUID workId = RecommendationScheduler.enqueueImmediateRefresh(requireContext(), false, true);
+            WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(workId)
+                    .observe(getViewLifecycleOwner(), workInfo -> {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
+                            binding.swipeRefreshLayout.setRefreshing(false);
+                            if (workInfo.getState() == WorkInfo.State.FAILED) {
+                                String errorMessage = workInfo.getOutputData().getString(RecommendationWorker.KEY_ERROR_MESSAGE);
+                                if (errorMessage != null && !errorMessage.isEmpty()) {
+                                    if (errorMessage.contains("429") || errorMessage.toLowerCase().contains("rate") || errorMessage.toLowerCase().contains("limit")) {
+                                        Snackbar.make(binding.getRoot(), "Refresh failed (API Rate Limit / Network Error). Please try again later.", Snackbar.LENGTH_LONG).show();
+                                    } else {
+                                        Snackbar.make(binding.getRoot(), "Refresh failed: " + errorMessage, Snackbar.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    Snackbar.make(binding.getRoot(), "Refresh failed. Please try again later.", Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                            loadRecommendations();
+                        }
+                    });
+        });
+
         loadRecommendations();
         return binding.getRoot();
     }
